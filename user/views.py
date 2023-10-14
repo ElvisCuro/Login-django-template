@@ -1,9 +1,9 @@
-from django.shortcuts import render, HttpResponse, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, HttpResponse, redirect
+from django.contrib.auth.decorators import login_required
 
-@login_required(login_url='login')
+@login_required(login_url='login') #login_required(redirect_field_name='next', login_url=None)
 def HomePage(request):
     return render(request, 'auth/home.html')
 
@@ -23,10 +23,10 @@ def SignupPage(request):
 
     return render(request, 'auth/signup.html')
 
-def LoginPage(request):
+def LoginPage(request):  #login(request, user, backend=None)
     if request.method == 'POST':
         username = request.POST.get('username')
-        pass1 = request.POST.get('pass')
+        pass1    = request.POST.get('pass')
         user = authenticate(request, username=username, password=pass1)
         if user is not None:
             login(request, user)
